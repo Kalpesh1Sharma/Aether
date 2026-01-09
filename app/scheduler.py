@@ -57,7 +57,8 @@ async def _handle_failure(job, worker_id, error, start_time):
     max_retries = job.get("max_retries", settings.dlq_max_retries)
 
     if retry_count < max_retries:
-        next_run_at = datetime.now(timezone.utc) + timedelta(seconds=2)
+        backoff_seconds = 2 ** retry_count
+        next_run_at = datetime.now(timezone.utc) + timedelta(seconds=backoff_seconds)
         await db.update_job_status(job_id, JobStatus.FAILED, worker_id=worker_id, error=error, increment_retry=True)
         await db.update_job_status(job_id, JobStatus.PENDING)
         await redis_client.requeue_job(job_id, next_run_at.timestamp(), job.get("priority", Priority.NORMAL.value))
