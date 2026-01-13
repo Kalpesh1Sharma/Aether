@@ -164,3 +164,6 @@ async def get_alive_workers() -> List[str]:
     r = await get_redis()
     keys = await r.keys(HEARTBEAT_NS + "*")
     return [k.replace(HEARTBEAT_NS, "") for k in keys]
+
+# Score formula: run_at_unix * 10 + priority_int
+# Lower score = claimed first. CRITICAL(0) beats LOW(3) at same timestamp.
