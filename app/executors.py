@@ -90,6 +90,7 @@ async def execute_llm_task(payload: Dict[str, Any], timeout: int) -> Dict[str, A
     }
 
 
+# Chain executor: DAG execution with result passing between steps
 async def execute_chain_step(
     job_id: str,
     payload: Dict[str, Any],
