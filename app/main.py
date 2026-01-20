@@ -264,6 +264,7 @@ async def health():
     )
 
 
+# /health /retry /logs added
 # ── Internal endpoint for chain result accumulation ───────────────────────────
 
 @app.post("/internal/chain-callback", include_in_schema=False)
