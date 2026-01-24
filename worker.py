@@ -39,4 +39,4 @@ async def main():
 
 if __name__ == "__main__":
     # Graceful shutdown: SIGTERM waits for in-flight jobs to finish
-asyncio.run(main())
+    asyncio.run(main())
